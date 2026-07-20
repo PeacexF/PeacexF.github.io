@@ -50,3 +50,5 @@ pnpm-debug.log*
 
 .env
 .env.production
+
+*.report.html
