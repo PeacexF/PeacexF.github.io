@@ -12,7 +12,7 @@
   --color-muted: #5a6472;
   --color-accent: #1e7a85;
   --color-accent-soft: #e4f0f1;
-  --color-hairline: #e2e5ea;
+  --color-hairline: #d4d8de;
 
   --color-status-active: #1e7a85;
   --color-status-finished: #4a5568;
@@ -50,5 +50,27 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  .prose :where(code):not(pre code) {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-hairline);
+    padding: 0.125em 0.35em;
+    border-radius: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+  .prose :where(code):not(pre code)::before,
+  .prose :where(code):not(pre code)::after {
+    content: none;
+  }
+
+  .prose :where(hr) {
+    border: none;
+    border-top: 2px solid var(--color-hairline);
+    margin: 2.5rem 0;
   }
 }

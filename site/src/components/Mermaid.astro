@@ -1,6 +1,17 @@
 ---
-// doesnt work xdd
+// Finds ```mermaid code
 ---
+
+<style is:global>
+  /* is:global is required here */
+  .mermaid-root pre[data-language="mermaid"] {
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+</style>
 
 <div class="mermaid-root">
   <slot />
@@ -27,14 +38,12 @@
 
   async function renderDiagrams() {
     const blocks = document.querySelectorAll<HTMLElement>(
-      ".mermaid-root pre > code.language-mermaid",
+      '.mermaid-root pre[data-language="mermaid"]',
     );
 
     let i = 0;
-    for (const block of blocks) {
-      const source = block.textContent ?? "";
-      const pre = block.parentElement;
-      if (!pre) continue;
+    for (const pre of blocks) {
+      const source = pre.textContent ?? "";
 
       const container = document.createElement("div");
       container.className = "mermaid-diagram not-prose my-8 overflow-x-auto";
@@ -44,6 +53,7 @@
         container.innerHTML = svg;
         pre.replaceWith(container);
       } catch (err) {
+        // Leave the original code block in place if rendering fails
         console.error("Mermaid render failed:", err);
       }
     }
