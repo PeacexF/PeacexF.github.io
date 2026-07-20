@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DocCard from "../../components/DocCard.astro";
+---
+
+<Layout title="Development" path="development">
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-8">
+    <h1 class="font-display text-3xl font-semibold tracking-tight text-ink">Development</h1>
+    <p class="mt-3 max-w-xl text-muted leading-relaxed">
+      DevOps and Infrastructure are capability pages — what I know, independent of any single
+      project. Projects is the actual portfolio: things I've built.
+    </p>
+  </section>
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="grid sm:grid-cols-3 gap-4">
+      <DocCard
+        href="/development/projects"
+        title="Projects"
+        oneLiner="Case studies of what's actually in the repo."
+      />
+      <DocCard
+        href="/development/devops"
+        title="DevOps"
+        oneLiner="Deployment, hardening, CI/CD — the operational side."
+      />
+      <DocCard
+        href="/development/infrastructure"
+        title="Infrastructure"
+        oneLiner="How the pieces of a system are laid out and talk to each other."
+      />
+    </div>
+  </section>
+</Layout>

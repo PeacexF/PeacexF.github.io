@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import DocCard from "../../../components/DocCard.astro";
+import { extractDocMeta } from "../../../lib/doc_meta";
+
+const order = ["skills", "system_design"];
+
+const entries = await getCollection("infrastructure");
+const bySlug = new Map(entries.map((e) => [e.id.replace(/\.md$/, ""), e]));
+const cards = order
+  .map((slug) => bySlug.get(slug))
+  .filter((e) => e !== undefined)
+  .map((e) => ({ slug: e.id.replace(/\.md$/, ""), ...extractDocMeta(e.body ?? "") }));
+---
+
+<Layout title="Infrastructure" path="development/infrastructure">
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-8">
+    <h1 class="font-display text-3xl font-semibold tracking-tight text-ink">Infrastructure</h1>
+    <p class="mt-3 max-w-xl text-muted leading-relaxed">
+      How the pieces of a system are laid out and how they talk to each other.
+    </p>
+  </section>
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="grid sm:grid-cols-2 gap-4">
+      {cards.map((c) => (
+        <DocCard
+          href={`/development/infrastructure/${c.slug}`}
+          title={c.title}
+          oneLiner={c.oneLiner}
+        />
+      ))}
+    </div>
+  </section>
+</Layout>

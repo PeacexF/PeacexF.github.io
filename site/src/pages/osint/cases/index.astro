@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Prose from "../../../components/Prose.astro";
+import { extractDocMeta } from "../../../lib/doc_meta";
+
+const entries = await getCollection("osintCases");
+const entry = entries[0];
+const { Content } = await render(entry);
+const { title, oneLiner } = extractDocMeta(entry.body ?? "");
+---
+
+<Layout title={title} description={oneLiner} path="osint/cases">
+  <article class="max-w-3xl mx-auto px-6 pt-16 pb-24">
+    <Prose>
+      <Content />
+    </Prose>
+  </article>
+</Layout>

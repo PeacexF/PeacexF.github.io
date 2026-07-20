@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Prose from "../../../components/Prose.astro";
+import { extractDocMeta } from "../../../lib/doc_meta";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("devops");
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, "") },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const slug = entry.id.replace(/\.md$/, "");
+const { title, oneLiner } = extractDocMeta(entry.body ?? "");
+---
+
+<Layout title={title} description={oneLiner} path={`development/devops/${slug}`}>
+  <article class="max-w-3xl mx-auto px-6 pt-16 pb-24">
+    <Prose>
+      <Content />
+    </Prose>
+  </article>
+</Layout>
