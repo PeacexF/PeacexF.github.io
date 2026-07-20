@@ -12,3 +12,5 @@ What I build most:
 Auth systems can be part of a project, but they're not where I'd say my strength is — if a project needs something auth-heavy, I'm upfront about that going in.
 
 I'm not attached to a specific stack. Go and Python are my primary tools, with PostgreSQL, SQLite and Redis depending on what the data actually needs.
+
+See [Chelicera](../development/projects/chelicera.md) or [HostIMG](../development/projects/hostimg.md) for what this looks like in practice.

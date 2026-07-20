@@ -13,3 +13,5 @@ In practice, this covers:
 * Monitoring via Google and Yandex metrics
 
 If a project needs to go from code to something running in production, reachable, and reasonably hardened, that's work I do myself rather than hand off.
+
+See [Chelicera](../development/projects/chelicera.md)'s multi-service Docker Compose setup, or [Proxyc](../development/projects/proxyc.md)'s CI pipeline with static analysis and memory-safety verification, for examples of how I approach this.

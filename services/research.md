@@ -9,3 +9,5 @@ OSINT-flavored research and information gathering. This covers work on companies
 * Social engineering-based investigation
 
 If you need information gathered and verified rather than guessed at, this is the kind of work I take on.
+
+See [OSINT Skills](../osint/skills.md) for the full technique and tool list.
