@@ -52,3 +52,9 @@ pnpm-debug.log*
 .env.production
 
 *.report.html
+
+# images
+public/about/
+public/services/
+public/osint/
+public/development/
