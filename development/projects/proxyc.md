@@ -1,6 +1,6 @@
 # Proxyc
 
-A high-performance proxy checker and manager written in C — a full rewrite of [Proxy Strainer](../labs/proxy_strainer.md), moving from thread-per-proxy Python to a single-threaded async event loop.
+A high-performance proxy checker and manager written in C — a full rewrite of [Proxy Strainer](./labs/proxy_strainer.md), moving from thread-per-proxy Python to a single-threaded async event loop.
 
 ---
 

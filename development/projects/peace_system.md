@@ -8,7 +8,7 @@ A hybrid Go + Python real-time system monitoring platform — metric collectors,
 
 Peace System watches a machine's own vitals — CPU, RAM, disk, network, and Docker container activity — and streams them through an event pipeline into a live dashboard, with threshold-based anomaly detection raising alerts along the way. It's explicitly scoped to local/self-hosted use (everything communicates over localhost), inspired by tools like Netdata and Datadog but built small on purpose rather than as a distributed observability platform.
 
-Development paused with the README stating plainly why: exams got in the way. What's there is functional end-to-end — collectors, pipeline, storage, alerting, dashboard — just without some of the deeper features (per-process analysis, deeper container introspection) the author wanted to add next. This was the second open-source project, following [Proxy Strainer](../labs/proxy_strainer.md).
+Development paused with the README stating plainly why: exams got in the way. What's there is functional end-to-end — collectors, pipeline, storage, alerting, dashboard — just without some of the deeper features (per-process analysis, deeper container introspection) the author wanted to add next. This was the second open-source project, following [Proxy Strainer](./labs/proxy_strainer.md).
 
 ---
 
