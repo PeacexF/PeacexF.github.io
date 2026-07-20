@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Not Found" description="This page doesn't exist.">
+  <section class="max-w-5xl mx-auto px-6 pt-24 pb-24 text-center">
+    <p class="font-mono text-sm text-accent mb-4">$ curl this-page</p>
+    <h1 class="font-display text-6xl font-semibold tracking-tight text-ink">404</h1>
+    <p class="mt-4 text-muted leading-relaxed">
+      Nothing resolved at this path. Might have moved, might never have existed.
+    </p>
+    <a
+      href="/"
+      class="inline-block mt-8 font-mono text-sm px-4 py-2 rounded-md bg-ink text-paper hover:bg-accent transition-colors"
+    >
+      cd ~
+    </a>
+  </section>
+</Layout>

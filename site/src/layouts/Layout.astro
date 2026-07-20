@@ -18,6 +18,9 @@ const crumbs = segments.map((seg, i) => ({
   label: seg,
   href: "/" + segments.slice(0, i + 1).join("/"),
 }));
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageTitle = `${title} — Peace`;
 ---
 
 <!doctype html>
@@ -26,8 +29,21 @@ const crumbs = segments.map((seg, i) => ({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>{title} — Peace</title>
+    <link rel="canonical" href={canonicalURL} />
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Peace" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,6 +51,24 @@ const crumbs = segments.map((seg, i) => ({
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Peace",
+      "url": Astro.site?.toString(),
+      "jobTitle": "Backend & Infrastructure Engineer",
+      "description": "Backend and infrastructure engineer working on distributed systems, automation, and OSINT tooling.",
+      "sameAs": ["https://github.com/PeacexF"],
+      "knowsAbout": [
+        "Backend Development",
+        "Distributed Systems",
+        "Infrastructure",
+        "DevOps",
+        "OSINT",
+      ],
+    })} />
   </head>
   <body class="min-h-screen flex flex-col">
     <header class="border-b border-hairline">
