@@ -6,6 +6,7 @@ import { rehypeStripMdLinks } from './src/lib/strip_md_links.mjs';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://peacexf.github.io',
   vite: {
     plugins: [tailwindcss()]
   },

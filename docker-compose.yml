@@ -1,0 +1,9 @@
+services:
+  site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-site
+    restart: unless-stopped
+    ports:
+      - "8080:80"
