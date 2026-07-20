@@ -101,4 +101,4 @@ This was the first project where concurrency actually mattered for the result, n
 
 ## Suitable Portfolio Categories
 
-Labs · Automation · Networking
+Labs · Automation · Networking · Open Source

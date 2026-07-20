@@ -71,4 +71,4 @@ This was a small, low-stakes way to reinforce Go basics — file I/O, JSON marsh
 
 ## Suitable Portfolio Categories
 
-Labs · Backend Engineering
+Labs · Backend Engineering · Open Source

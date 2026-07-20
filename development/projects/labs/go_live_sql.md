@@ -81,4 +81,4 @@ This was mostly about getting comfortable with Go's syntax and standard library 
 
 ## Suitable Portfolio Categories
 
-Labs · Backend Engineering
+Labs · Backend Engineering · Open Source
