@@ -14,4 +14,4 @@ Telegram: `@peaceful_origin`
 
 Session: `0565f832ff07887256f89bb30db24e587410602115eac980526bd7f2b0d2cf3104`
 
-Website: `coming soon`
+Website: `peacexf.github.io`
