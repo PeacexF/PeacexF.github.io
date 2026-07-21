@@ -24,7 +24,7 @@ This repository is my portfolio. Every directory has its own `README.md`, so you
 
 ### Contact
 
-Email: `pxxcx_8@proton.me`
+Email: `peace_work@tuta.io`
 &nbsp;·&nbsp;
 Telegram: `@peaceful_origin`
 

@@ -8,10 +8,8 @@ Calls are fine if that's easier for you, but text works just as well and keeps t
 
 ---
 
-Email: `pxxcx_8@proton.me`
+Email: `peace_work@tuta.io`
 
-Telegram: `@peaceful_origin`
+Telegram: `https://t.me/peaceful_origin`
 
 Session: `0565f832ff07887256f89bb30db24e587410602115eac980526bd7f2b0d2cf3104`
-
-Website: `peacexf.github.io`

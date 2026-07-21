@@ -26,7 +26,7 @@ Backend и infrastructure инженер. UTC+3.
 
 ### Контакты
 
-Email: `pxxcx_8@proton.me`
+Email: `peace_work@tuta.io`
 &nbsp;·&nbsp;
 Telegram: `@peaceful_origin`
 
