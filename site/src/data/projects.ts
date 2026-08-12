@@ -43,6 +43,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  leadpipe: {
+    title: "LeadPipe",
+    oneLiner: "Lead collection pipeline with entity resolution and full field-level provenance.",
+    category: "main",
+    status: "finished",
+    stack: ["Python", "PostgreSQL", "FastAPI", "SQLAlchemy", "Docker"],
+    openSource: true,
+  },
   twork: {
     title: "Twork",
     oneLiner: "Self-hosted Telegram job-hunting tool — monitors channels, indexes locally, matches deterministically.",

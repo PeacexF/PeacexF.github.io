@@ -12,6 +12,7 @@ Projects I've built, organized by what kind of work they were.
 * [EnvGraph](./envgraph.md)
 * [ExifDork](./exifdork.md)
 * [Hostimg](./hostimg.md)
+* [LeadPipe](./leadpipe.md)
 * [Mailrain](./mailrain.md)
 * [Malbot](./malbot.md)
 * [News Summary](./news_summary.md)
