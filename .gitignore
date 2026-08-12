@@ -56,8 +56,9 @@ pnpm-debug.log*
 *.report.html
 .claude
 
-# images
-public/about/
-public/services/
-public/osint/
-public/development/
+# images mirrored into the site build by copy-content-images
+site/public/about/
+site/public/services/
+site/public/osint/
+site/public/development/
+site/public/assets/

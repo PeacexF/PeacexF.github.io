@@ -13,7 +13,7 @@ const IMAGE_EXTENSIONS = new Set([
   ".avif",
 ]);
 
-const CONTENT_DIRS = ["about", "services", "osint", "development"];
+const CONTENT_DIRS = ["about", "services", "osint", "development", "assets"];
 
 function copyImages(srcDir, destDir, logger) {
   if (!fs.existsSync(srcDir)) return 0;

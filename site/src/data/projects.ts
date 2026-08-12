@@ -43,6 +43,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  webhookinbox: {
+    title: "Webhook Inbox",
+    oneLiner: "Self-hosted webhook inspection, search and replay platform.",
+    category: "main",
+    status: "finished",
+    stack: ["Python", "FastAPI", "MongoDB", "htmx", "Docker"],
+    openSource: true,
+  },
   leadpipe: {
     title: "LeadPipe",
     oneLiner: "Lead collection pipeline with entity resolution and full field-level provenance.",
