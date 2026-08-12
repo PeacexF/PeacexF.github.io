@@ -54,6 +54,7 @@ pnpm-debug.log*
 .env.production
 
 *.report.html
+.claude
 
 # images
 public/about/

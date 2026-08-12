@@ -17,4 +17,5 @@ Projects I've built, organized by what kind of work they were.
 * [News Summary](./news_summary.md)
 * [Peace System](./peace_system.md)
 * [Proxyc](./proxyc.md)
+* [SoundLight](./soundlight.md)
 * [Stinger](./stinger.md)

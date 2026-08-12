@@ -43,6 +43,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  soundlight: {
+    title: "SoundLight",
+    oneLiner: "Local-first desktop music library with an embedded acquisition browser.",
+    category: "main",
+    status: "paused",
+    stack: ["Rust", "Tauri", "React", "TypeScript", "SQLite"],
+    openSource: true,
+  },
   hostimg: {
     title: "HostIMG",
     oneLiner: "Content-addressable image hosting backend with real dedup accounting.",
