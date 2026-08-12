@@ -43,6 +43,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  envseal: {
+    title: "envseal",
+    oneLiner: "Encrypts .env files so they can live in Git — age-based, local-first, no server.",
+    category: "main",
+    status: "active",
+    stack: ["Go", "age", "Cobra", "Docker"],
+    openSource: true,
+  },
   webhookinbox: {
     title: "Webhook Inbox",
     oneLiner: "Self-hosted webhook inspection, search and replay platform.",

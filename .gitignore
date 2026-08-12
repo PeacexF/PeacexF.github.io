@@ -54,7 +54,6 @@ pnpm-debug.log*
 .env.production
 
 *.report.html
-.claude
 
 # images mirrored into the site build by copy-content-images
 site/public/about/

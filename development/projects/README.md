@@ -10,6 +10,7 @@ Projects I've built, organized by what kind of work they were.
 
 * [Chelicera](./chelicera.md)
 * [EnvGraph](./envgraph.md)
+* [envseal](./envseal.md)
 * [ExifDork](./exifdork.md)
 * [Hostimg](./hostimg.md)
 * [LeadPipe](./leadpipe.md)
