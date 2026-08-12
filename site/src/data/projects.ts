@@ -43,6 +43,13 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  gitxnet: {
+    title: "GitXNet",
+    oneLiner: "Change-detection platform for public interfaces — specs, docs and policy pages — with evidence on every claim.",
+    category: "main",
+    status: "active",
+    stack: ["Go", "PostgreSQL", "Redis", "S3", "React", "Docker"],
+  },
   envseal: {
     title: "envseal",
     oneLiner: "Encrypts .env files so they can live in Git — age-based, local-first, no server.",
