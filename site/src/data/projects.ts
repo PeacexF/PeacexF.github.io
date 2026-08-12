@@ -73,6 +73,13 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Python", "PostgreSQL", "Telegram"],
     openSource: true,
   },
+  "client-work/webwell": {
+    title: "Water-Well Drilling Company Site",
+    oneLiner: "Marketing site with an outbox-backed lead pipeline and a Telegram bot for delivery.",
+    category: "client-work",
+    status: "finished",
+    stack: ["Astro", "TypeScript", "Python", "SQLite", "Docker", "Caddy"],
+  },
   "client-work/company_website": {
     title: "Corporate Landing Page",
     oneLiner: "Performance and SEO-focused static site built for a client.",
