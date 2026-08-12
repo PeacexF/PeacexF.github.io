@@ -33,6 +33,27 @@ const pageTitle = `${title} — Peace`;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="google-site-verification" content="FTRL7caHTKY9N8kQQNkPtxQYtpbcOiDBDHR1uvpWmb0" />
+    <meta name="theme-color" content="#f6f7f9" />
+
+    <!-- Resolves the theme before the first paint. Inline and blocking on
+         purpose: deferring it means a flash of the wrong palette. -->
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem("theme");
+        } catch (e) {
+          /* private mode, or storage disabled */
+        }
+        var theme =
+          stored === "light" || stored === "dark"
+            ? stored
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
@@ -84,6 +105,40 @@ const pageTitle = `${title} — Peace`;
           <a href="/services" class="hover:text-ink transition-colors">services</a>
           <a href="/development" class="hover:text-ink transition-colors">development</a>
           <a href="/osint" class="hover:text-ink transition-colors">osint</a>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="ml-1 -my-1 p-1.5 rounded-md text-muted hover:text-ink transition-colors cursor-pointer"
+            aria-label="Switch to dark theme"
+            title="Switch theme"
+          >
+            <!-- Moon in light mode, sun in dark: the icon shows where you land. -->
+            <svg
+              class="w-4 h-4 dark:hidden"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg
+              class="w-4 h-4 hidden dark:block"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+            </svg>
+          </button>
         </nav>
       </div>
       {crumbs.length > 0 && (
@@ -111,5 +166,56 @@ const pageTitle = `${title} — Peace`;
         <a href="/about/contact" class="hover:text-accent transition-colors">get in touch →</a>
       </div>
     </footer>
+
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var button = document.getElementById("theme-toggle");
+        var meta = document.querySelector('meta[name="theme-color"]');
+        var GROUND = { light: "#f6f7f9", dark: "#0f1319" };
+
+        function apply(theme) {
+          root.dataset.theme = theme;
+          if (meta) meta.setAttribute("content", GROUND[theme]);
+          if (button) {
+            button.setAttribute(
+              "aria-label",
+              theme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+            );
+          }
+          // Mermaid re-renders its diagrams against the new palette.
+          document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: theme } }));
+        }
+
+        apply(root.dataset.theme === "dark" ? "dark" : "light");
+
+        if (button) {
+          button.addEventListener("click", function () {
+            var next = root.dataset.theme === "dark" ? "light" : "dark";
+            try {
+              localStorage.setItem("theme", next);
+            } catch (e) {
+              /* the choice just will not survive the tab */
+            }
+            apply(next);
+          });
+        }
+
+        // Follow the system only while the visitor has not chosen for themselves.
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", function (event) {
+            var stored = null;
+            try {
+              stored = localStorage.getItem("theme");
+            } catch (e) {
+              /* ignore */
+            }
+            if (stored !== "light" && stored !== "dark") {
+              apply(event.matches ? "dark" : "light");
+            }
+          });
+      })();
+    </script>
   </body>
 </html>

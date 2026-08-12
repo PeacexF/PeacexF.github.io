@@ -1,6 +1,15 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* The theme is resolved to an explicit data-theme by the inline script in
+   Layout.astro, so everything below keys off the attribute alone — no
+   media-query duplication, and no flash before the palette is known. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+}
+
 @theme {
   --font-display: "Space Grotesk", sans-serif;
   --font-sans: "IBM Plex Sans", sans-serif;
@@ -20,7 +29,34 @@
   --color-status-development: #3d6fb4;
 }
 
+/* Dark is the same design with the paper/ink relationship inverted: a cool
+   near-black ground, off-white text, one teal accent. The accent is lightened
+   because #1e7a85 does not clear 4.5:1 against a dark background — the hue is
+   the signature, not the exact value. */
+[data-theme="dark"] {
+  --color-paper: #0f1319;
+  --color-surface: #161b23;
+  --color-ink: #e7eaef;
+  --color-muted: #98a2b0;
+  --color-accent: #46b3c0;
+  --color-accent-soft: #10353c;
+  --color-hairline: #262e39;
+
+  --color-status-active: #46b3c0;
+  --color-status-finished: #8a94a3;
+  --color-status-paused: #d3ab63;
+  --color-status-development: #6d9ce2;
+}
+
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--color-paper);
     color: var(--color-ink);
@@ -73,4 +109,48 @@
     border-top: 2px solid var(--color-hairline);
     margin: 2.5rem 0;
   }
+}
+
+/* Typography reads its colours from these variables, so pointing them at the
+   design tokens makes prose follow the theme without a `prose-invert` swap —
+   one palette, one place, both themes.
+
+   Unlayered on purpose: the plugin's own values live in a layer, and unlayered
+   declarations win the cascade regardless of specificity. */
+.prose {
+  --tw-prose-body: var(--color-ink);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-hairline);
+  --tw-prose-hr: var(--color-hairline);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-hairline);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-pre-code: var(--color-paper);
+  --tw-prose-pre-bg: var(--color-ink);
+  --tw-prose-th-borders: var(--color-hairline);
+  --tw-prose-td-borders: var(--color-hairline);
+}
+
+/* Code blocks invert (ink ground, paper text) in light mode, which reads as a
+   deliberate slab. Inverting again in dark would make them the brightest thing
+   on the page, so they stay a raised surface instead. */
+[data-theme="dark"] .prose {
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-pre-code: var(--color-ink);
+}
+
+[data-theme="dark"] .prose :where(pre) {
+  border: 1px solid var(--color-hairline);
+}
+
+/* Mermaid renders to SVG at runtime; the diagram is re-rendered on a theme
+   change, and this only smooths the swap. */
+.mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
 }

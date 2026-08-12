@@ -20,10 +20,14 @@
 <script>
   import mermaid from "mermaid";
 
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: "base",
-    themeVariables: {
+  // Diagrams are re-rendered when the theme changes, so the source has to
+  // outlive the first render — the SVG that replaces a block cannot be read
+  // back as mermaid text.
+  const sources = new Map<HTMLElement, string>();
+  let counter = 0;
+
+  const palettes = {
+    light: {
       background: "#f6f7f9",
       primaryColor: "#e4f0f1",
       primaryTextColor: "#12161d",
@@ -31,17 +35,50 @@
       lineColor: "#5a6472",
       secondaryColor: "#ffffff",
       tertiaryColor: "#f6f7f9",
-      fontFamily: "IBM Plex Mono, monospace",
-      fontSize: "14px",
     },
-  });
+    dark: {
+      background: "#0f1319",
+      primaryColor: "#10353c",
+      primaryTextColor: "#e7eaef",
+      primaryBorderColor: "#46b3c0",
+      lineColor: "#98a2b0",
+      secondaryColor: "#161b23",
+      tertiaryColor: "#0f1319",
+    },
+  } as const;
+
+  function currentTheme(): keyof typeof palettes {
+    return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  }
+
+  function configure(theme: keyof typeof palettes) {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "base",
+      themeVariables: {
+        ...palettes[theme],
+        fontFamily: "IBM Plex Mono, monospace",
+        fontSize: "14px",
+      },
+    });
+  }
+
+  async function renderInto(host: HTMLElement, source: string) {
+    try {
+      const { svg } = await mermaid.render(`mermaid-${counter++}`, source);
+      host.innerHTML = svg;
+    } catch (err) {
+      console.error("Mermaid render failed:", err);
+    }
+  }
 
   async function renderDiagrams() {
+    configure(currentTheme());
+
     const blocks = document.querySelectorAll<HTMLElement>(
       '.mermaid-root pre[data-language="mermaid"]',
     );
 
-    let i = 0;
     for (const pre of blocks) {
       const source = pre.textContent ?? "";
 
@@ -49,8 +86,9 @@
       container.className = "mermaid-diagram not-prose my-8 overflow-x-auto";
 
       try {
-        const { svg } = await mermaid.render(`mermaid-${i++}`, source);
+        const { svg } = await mermaid.render(`mermaid-${counter++}`, source);
         container.innerHTML = svg;
+        sources.set(container, source);
         pre.replaceWith(container);
       } catch (err) {
         // Leave the original code block in place if rendering fails
@@ -59,5 +97,13 @@
     }
   }
 
+  async function rerender() {
+    configure(currentTheme());
+    for (const [host, source] of sources) {
+      await renderInto(host, source);
+    }
+  }
+
   renderDiagrams();
+  document.addEventListener("themechange", () => void rerender());
 </script>
