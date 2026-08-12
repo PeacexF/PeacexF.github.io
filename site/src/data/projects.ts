@@ -43,6 +43,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  twork: {
+    title: "Twork",
+    oneLiner: "Self-hosted Telegram job-hunting tool — monitors channels, indexes locally, matches deterministically.",
+    category: "main",
+    status: "active",
+    stack: ["Go", "SQLite", "MTProto", "Telegram", "React"],
+    openSource: true,
+  },
   soundlight: {
     title: "SoundLight",
     oneLiner: "Local-first desktop music library with an embedded acquisition browser.",
