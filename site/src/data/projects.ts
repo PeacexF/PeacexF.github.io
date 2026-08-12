@@ -35,6 +35,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["C", "libcurl", "SQLite"],
     openSource: true,
   },
+  envgraph: {
+    title: "EnvGraph",
+    oneLiner: "Static analyzer that maps where every environment variable comes from and who reads it.",
+    category: "main",
+    status: "development",
+    stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
+    openSource: true,
+  },
   hostimg: {
     title: "HostIMG",
     oneLiner: "Content-addressable image hosting backend with real dedup accounting.",

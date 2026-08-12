@@ -9,6 +9,7 @@ Projects I've built, organized by what kind of work they were.
 ### Main Projects
 
 * [Chelicera](./chelicera.md)
+* [EnvGraph](./envgraph.md)
 * [ExifDork](./exifdork.md)
 * [Hostimg](./hostimg.md)
 * [Mailrain](./mailrain.md)
