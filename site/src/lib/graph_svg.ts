@@ -1,6 +1,7 @@
 // Flat projection of the baked graph
 
 import type { GraphNode, SiteGraph } from "./site_graph";
+import { cssValue, deservesLabel, EDGE_TOKEN, isStructural, nodeRadius, tokenFor } from "./graph_theme";
 
 export interface SvgOptions {
   width?: number;
@@ -11,16 +12,7 @@ export interface SvgOptions {
   labels?: boolean;
 }
 
-const SECTION_COLOR: Record<string, string> = {
-  root: "var(--color-ink, #12161d)",
-  development: "var(--color-accent, #1e7a85)",
-  osint: "var(--color-status-paused, #9a7b3f)",
-  services: "var(--color-status-development, #3d6fb4)",
-  about: "var(--color-muted, #5a6472)",
-};
-
-const colorFor = (n: GraphNode) =>
-  SECTION_COLOR[n.section] ?? "var(--color-muted, #5a6472)";
+const colorFor = (n: GraphNode) => cssValue(tokenFor(n.section));
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -31,13 +23,6 @@ interface Projected {
   sy: number;
   depth: number;
   r: number;
-}
-
-// Square root because the eye compares area, not radius.
-function radiusOf(node: GraphNode): number {
-  if (node.kind === "root") return 7;
-  if (node.kind === "index") return 4.5;
-  return 2.5 + Math.sqrt(node.words) / 9;
 }
 
 export function graphToSvg(graph: SiteGraph, opts: SvgOptions = {}): string {
@@ -60,7 +45,7 @@ export function graphToSvg(graph: SiteGraph, opts: SvgOptions = {}): string {
     const z2 = n.y * sinP + z1 * cosP;
 
     const scale = distance / (distance - z2);
-    return { node: n, sx: x1 * scale, sy: -y2 * scale, depth: z2, r: radiusOf(n) * scale };
+    return { node: n, sx: x1 * scale, sy: -y2 * scale, depth: z2, r: nodeRadius(n) * scale };
   };
 
   const points = new Map<string, Projected>();
@@ -106,7 +91,7 @@ export function graphToSvg(graph: SiteGraph, opts: SvgOptions = {}): string {
     const tree = e.kind === "tree";
     out.push(
       `<line x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}" ` +
-        `stroke="var(--color-hairline, #d4d8de)" ` +
+        `stroke="${cssValue(EDGE_TOKEN)}" ` +
         `stroke-width="${tree ? 1.1 : 0.8}" ` +
         `opacity="${(fade(near) * (tree ? 0.9 : 0.5)).toFixed(2)}"` +
         `${tree ? "" : ` stroke-dasharray="3 3"`} />`,
@@ -130,8 +115,8 @@ export function graphToSvg(graph: SiteGraph, opts: SvgOptions = {}): string {
     // placed — labelling all 50 is an unreadable mat of overlapping text.
     const placed: Array<[number, number, number, number]> = [];
     for (const p of [...drawOrder].reverse()) {
-      const structural = p.node.kind !== "page";
-      if (!structural && p.node.words < 2400) continue;
+      if (!deservesLabel(p.node)) continue;
+      const structural = isStructural(p.node);
 
       const size = structural ? 12 : 10;
       const cx = X(p);

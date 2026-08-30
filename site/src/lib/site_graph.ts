@@ -90,7 +90,11 @@ function ancestors(href: string): string[] {
   return out;
 }
 
+let cached: SiteGraph | null = null;
+
 export async function buildSiteGraph(): Promise<SiteGraph> {
+  if (cached) return cached;
+
   const nodes = new Map<string, GraphNode>();
   const edges: GraphEdge[] = [];
   const sourceDirOf = new Map<string, string>();
@@ -180,7 +184,8 @@ export async function buildSiteGraph(): Promise<SiteGraph> {
   const ordered = [...nodes.values()].sort((a, b) => a.id.localeCompare(b.id));
   layout(ordered, edges);
 
-  return { nodes: ordered, edges };
+  cached = { nodes: ordered, edges };
+  return cached;
 }
 
 function mulberry32(seed: number) {

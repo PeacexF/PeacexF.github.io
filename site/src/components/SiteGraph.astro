@@ -1,0 +1,146 @@
+---
+import { buildSiteGraph } from "../lib/site_graph";
+import { graphToSvg } from "../lib/graph_svg";
+
+interface Props {
+  mode?: "ambient" | "interactive";
+  class?: string;
+}
+
+const { mode = "ambient", class: className = "" } = Astro.props;
+const graph = await buildSiteGraph();
+const fallback = graphToSvg(graph, { labels: true });
+---
+
+<div class:list={["graph-root", className]} data-mode={mode}>
+  <canvas class="graph-canvas"></canvas>
+  <div class="graph-overlay" aria-hidden="true"></div>
+  <div class="graph-fallback" set:html={fallback} />
+  <script is:inline type="application/json" class="graph-data" set:html={JSON.stringify(graph)} />
+</div>
+
+<style>
+  /* Floor, so a caller that forgets a height gets a small graph, not none. */
+  .graph-root {
+    position: relative;
+    isolation: isolate;
+    min-height: 320px;
+  }
+
+  .graph-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .graph-root[data-live="1"] .graph-canvas {
+    opacity: 1;
+  }
+
+  .graph-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .graph-fallback,
+  .graph-fallback :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .graph-fallback {
+    display: grid;
+    place-items: center;
+  }
+
+  .graph-root[data-live="1"] .graph-fallback {
+    display: none;
+  }
+
+  /* Ink on a ground-coloured halo: labels sit over nodes and edges, so they
+     need to win against both without a solid plate behind every one. */
+  .graph-overlay :global(.graph-label) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-ink);
+    will-change: transform;
+    text-shadow:
+      0 0 3px var(--color-paper),
+      0 0 3px var(--color-paper),
+      0 0 6px var(--color-paper);
+  }
+
+  .graph-overlay :global(.graph-label[data-structural="true"]) {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .graph-overlay :global(.graph-label[data-hovered="true"]) {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  import type { SiteGraph } from "../lib/site_graph";
+
+  function hasWebGL() {
+    try {
+      return !!document.createElement("canvas").getContext("webgl2");
+    } catch {
+      return false;
+    }
+  }
+
+  function init(root: HTMLElement) {
+    if (root.dataset.mounted) return;
+    root.dataset.mounted = "1";
+
+    const canvas = root.querySelector<HTMLCanvasElement>(".graph-canvas");
+    const overlay = root.querySelector<HTMLElement>(".graph-overlay");
+    const data = root.querySelector<HTMLScriptElement>(".graph-data");
+    if (!canvas || !overlay || !data || !hasWebGL()) return;
+
+    const graph: SiteGraph = JSON.parse(data.textContent ?? "{}");
+    const mode = root.dataset.mode === "interactive" ? "interactive" : "ambient";
+
+    // three is ~150KB, so it only loads once the canvas is actually near view.
+    const io = new IntersectionObserver(
+      async ([entry], obs) => {
+        if (!entry.isIntersecting) return;
+        obs.disconnect();
+        try {
+          const { mountGraph } = await import("../lib/graph_render");
+          mountGraph({
+            canvas,
+            overlay,
+            graph,
+            mode,
+            onSelect: (node) => {
+              window.location.href = node.href;
+            },
+          });
+          root.dataset.live = "1";
+        } catch (err) {
+          console.error("graph renderer failed, keeping fallback", err);
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    io.observe(root);
+  }
+
+  document.querySelectorAll<HTMLElement>(".graph-root").forEach(init);
+</script>

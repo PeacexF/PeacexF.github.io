@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteGraph from "../components/SiteGraph.astro";
+import { buildSiteGraph } from "../lib/site_graph";
+
+const graph = await buildSiteGraph();
+const pages = graph.nodes.filter((n) => n.kind === "page").length;
+
+const legend = [
+  { label: "development", token: "var(--color-accent)" },
+  { label: "services", token: "var(--color-status-development)" },
+  { label: "osint", token: "var(--color-status-paused)" },
+  { label: "about", token: "var(--color-muted)" },
+];
+---
+
+<Layout
+  title="Map"
+  path="map"
+  description="Every page on this site, as a graph: sections, pages, and the links between them."
+>
+  <div class="max-w-5xl mx-auto px-6 pt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+    <h1 class="font-display text-xl font-semibold tracking-tight text-ink">Map</h1>
+    <p class="font-mono text-xs text-muted">
+      {pages} pages · drag to turn · scroll to zoom · click to open
+    </p>
+  </div>
+
+  <SiteGraph mode="interactive" class="w-full h-[calc(100vh-13rem)] min-h-104 mt-2" />
+
+  <div
+    class="max-w-5xl mx-auto px-6 pb-10 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs text-muted"
+  >
+    {
+      legend.map((l) => (
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full" style={`background:${l.token}`} />
+          {l.label}
+        </span>
+      ))
+    }
+    <span class="inline-flex items-center gap-1.5">
+      <span class="w-4 h-px bg-muted" />
+      contains
+    </span>
+    <span class="inline-flex items-center gap-1.5">
+      <span
+        class="w-4 h-px"
+        style="background:repeating-linear-gradient(90deg,var(--color-muted) 0 3px,transparent 3px 6px)"
+      />
+      links to
+    </span>
+  </div>
+</Layout>
