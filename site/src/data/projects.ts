@@ -120,6 +120,13 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Python", "PostgreSQL", "Telegram"],
     openSource: true,
   },
+  "client-work/ozarnik": {
+    title: "Ozarnik",
+    oneLiner: "Rust AI assistant sharing one core, memory and sandboxed tool runtime across a Telegram bot and a web Mini App.",
+    category: "client-work",
+    status: "finished",
+    stack: ["Rust", "PostgreSQL", "React", "TypeScript", "Docker", "Telegram"],
+  },
   "client-work/webwell": {
     title: "Water-Well Drilling Company Site",
     oneLiner: "Marketing site with an outbox-backed lead pipeline and a Telegram bot for delivery.",
