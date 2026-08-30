@@ -89,26 +89,29 @@
   }
 }
 
-@layer base {
-  .prose :where(code):not(pre code) {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-hairline);
-    padding: 0.125em 0.35em;
-    border-radius: 0.25rem;
-    font-family: var(--font-mono);
-    font-size: 0.85em;
-    font-weight: 500;
-  }
-  .prose :where(code):not(pre code)::before,
-  .prose :where(code):not(pre code)::after {
-    content: none;
-  }
+/* Unlayered, for the same reason as the prose variables below: the typography
+   plugin lives in a later layer, and layer order beats specificity. Left in
+   `@layer base` the chip styling still applied (nothing opposed it) while
+   `content: none` silently lost — so every inline `code` rendered with the
+   plugin's literal backticks inside the chip. */
+.prose :where(code):not(pre code) {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  padding: 0.125em 0.35em;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 500;
+}
+.prose :where(code):not(pre code)::before,
+.prose :where(code):not(pre code)::after {
+  content: none;
+}
 
-  .prose :where(hr) {
-    border: none;
-    border-top: 2px solid var(--color-hairline);
-    margin: 2.5rem 0;
-  }
+.prose :where(hr) {
+  border: none;
+  border-top: 2px solid var(--color-hairline);
+  margin: 2.5rem 0;
 }
 
 /* Typography reads its colours from these variables, so pointing them at the
