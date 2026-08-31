@@ -1,7 +1,7 @@
 // Flat projection of the baked graph
 
 import type { GraphNode, SiteGraph } from "./site_graph";
-import { cssValue, deservesLabel, EDGE_TOKEN, isStructural, nodeRadius, tokenFor } from "./graph_theme";
+import { cssValue, EDGE_TOKEN, isStructural, nodeRadius, tokenFor } from "./graph_theme";
 
 export interface SvgOptions {
   width?: number;
@@ -10,6 +10,7 @@ export interface SvgOptions {
   pitch?: number;
   distance?: number;
   labels?: boolean;
+  labelMode?: "all" | "structural";
 }
 
 const colorFor = (n: GraphNode) => cssValue(tokenFor(n.section));
@@ -33,6 +34,7 @@ export function graphToSvg(graph: SiteGraph, opts: SvgOptions = {}): string {
     pitch = 0.32,
     distance = 3.2,
     labels = true,
+    labelMode = "all",
   } = opts;
 
   const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
@@ -115,8 +117,8 @@ export function graphToSvg(graph: SiteGraph, opts: SvgOptions = {}): string {
     // placed — labelling all 50 is an unreadable mat of overlapping text.
     const placed: Array<[number, number, number, number]> = [];
     for (const p of [...drawOrder].reverse()) {
-      if (!deservesLabel(p.node)) continue;
       const structural = isStructural(p.node);
+      if (labelMode === "structural" && !structural) continue;
 
       const size = structural ? 12 : 10;
       const cx = X(p);

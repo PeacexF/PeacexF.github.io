@@ -37,6 +37,3 @@ export function nodeRadius(node: GraphNode): number {
 }
 
 export const isStructural = (node: GraphNode) => node.kind !== "page";
-
-// Everything is labelled; collision rejection decides what actually fits.
-export const deservesLabel = (_node: GraphNode) => true;

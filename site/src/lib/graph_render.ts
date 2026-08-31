@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { GraphNode, SiteGraph } from "./site_graph";
-import { EDGE_LIVE_TOKEN, nodeRadius, resolvedValue, tokenFor } from "./graph_theme";
+import { EDGE_LIVE_TOKEN, isStructural, nodeRadius, resolvedValue, tokenFor } from "./graph_theme";
 
 const VERTEX = `
 attribute float size;
@@ -37,6 +37,7 @@ export interface GraphMountOptions {
   overlay: HTMLElement;
   graph: SiteGraph;
   mode: "ambient" | "interactive";
+  labels?: "all" | "structural";
   onSelect?(node: GraphNode): void;
 }
 
@@ -131,7 +132,9 @@ export function mountGraph(o: GraphMountOptions): GraphHandle {
     halfHeight: number;
   }
   const labels: Label[] = [];
+  const labelMode = o.labels ?? "all";
   nodes.forEach((n, i) => {
+    if (labelMode === "structural" && !isStructural(n)) return;
     const el = document.createElement("span");
     el.className = "graph-label";
     el.dataset.structural = String(n.kind !== "page");

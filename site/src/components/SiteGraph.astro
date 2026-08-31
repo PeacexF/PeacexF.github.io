@@ -9,7 +9,10 @@ interface Props {
 
 const { mode = "ambient", class: className = "" } = Astro.props;
 const graph = await buildSiteGraph();
-const fallback = graphToSvg(graph, { labels: true });
+const fallback = graphToSvg(graph, {
+  labels: true,
+  labelMode: mode === "ambient" ? "structural" : "all",
+});
 ---
 
 <div class:list={["graph-root", className]} data-mode={mode}>
@@ -128,6 +131,7 @@ const fallback = graphToSvg(graph, { labels: true });
             overlay,
             graph,
             mode,
+            labels: mode === "ambient" ? "structural" : "all",
             onSelect: (node) => {
               window.location.href = node.href;
             },
