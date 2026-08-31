@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import CommandPalette from "../components/CommandPalette.astro";
 
 interface Props {
   title: string;
@@ -105,6 +106,7 @@ const pageTitle = `${title} — Peace`;
           <a href="/services" class="hover:text-ink transition-colors">services</a>
           <a href="/development" class="hover:text-ink transition-colors">development</a>
           <a href="/osint" class="hover:text-ink transition-colors">osint</a>
+          <CommandPalette />
           <button
             id="theme-toggle"
             type="button"
@@ -156,7 +158,9 @@ const pageTitle = `${title} — Peace`;
       )}
     </header>
 
-    <main class="flex-1">
+    <!-- Pagefind indexes only this, so the nav, breadcrumb and footer are not
+         repeated into every page's index entry. -->
+    <main class="flex-1" data-pagefind-body>
       <slot />
     </main>
 

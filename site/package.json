@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist --quiet",
     "check:contrast": "node scripts/check-contrast.mjs",
     "preview": "astro preview",
     "astro": "astro"
@@ -24,6 +24,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@types/three": "^0.185.4"
+    "@types/three": "^0.185.4",
+    "pagefind": "^1.5.2"
   }
 }

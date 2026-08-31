@@ -15,7 +15,9 @@ const fallback = graphToSvg(graph, {
 });
 ---
 
-<div class:list={["graph-root", className]} data-mode={mode}>
+<!-- data-pagefind-ignore: the inlined graph JSON is coordinates, not prose, and
+     would otherwise be indexed as page text. -->
+<div class:list={["graph-root", className]} data-mode={mode} data-pagefind-ignore>
   <canvas class="graph-canvas"></canvas>
   <div class="graph-overlay" aria-hidden="true"></div>
   <div class="graph-fallback" set:html={fallback} />
