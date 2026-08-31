@@ -4,14 +4,33 @@ import SiteGraph from "../components/SiteGraph.astro";
 import { buildSiteGraph } from "../lib/site_graph";
 
 const graph = await buildSiteGraph();
-const pages = graph.nodes.filter((n) => n.kind === "page").length;
+const pages = graph.nodes.filter((n) => n.kind === "page");
 
-const legend = [
-  { label: "development", token: "var(--color-accent)" },
-  { label: "services", token: "var(--color-status-development)" },
-  { label: "osint", token: "var(--color-status-paused)" },
-  { label: "about", token: "var(--color-muted)" },
+const SECTIONS = [
+  { key: "development", token: "var(--color-accent)" },
+  { key: "services", token: "var(--color-status-development)" },
+  { key: "osint", token: "var(--color-status-paused)" },
+  { key: "about", token: "var(--color-muted)" },
 ];
+
+// Grouped listing under the canvas, the real sitemap
+const parentOf = (href: string) => href.split("/").slice(0, -1).join("/") || "/";
+
+const childrenOf = (href: string) =>
+  graph.nodes
+    .filter((n) => n.href !== "/" && parentOf(n.href) === href)
+    .sort((a, b) =>
+      a.kind === b.kind ? a.label.localeCompare(b.label) : a.kind === "index" ? -1 : 1,
+    );
+
+function flatten(href: string, depth = 0): Array<{ node: (typeof graph.nodes)[number]; depth: number }> {
+  const self = graph.nodes.find((n) => n.href === href);
+  const rows = self ? [{ node: self, depth }] : [];
+  for (const child of childrenOf(href)) rows.push(...flatten(child.href, depth + 1));
+  return rows;
+}
+
+const grouped = SECTIONS.map((s) => ({ ...s, rows: flatten(`/${s.key}`) }));
 ---
 
 <Layout
@@ -19,36 +38,148 @@ const legend = [
   path="map"
   description="Every page on this site, as a graph: sections, pages, and the links between them."
 >
-  <div class="max-w-5xl mx-auto px-6 pt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-    <h1 class="font-display text-xl font-semibold tracking-tight text-ink">Map</h1>
-    <p class="font-mono text-xs text-muted">
-      {pages} pages · drag to turn · scroll to zoom · click to open
-    </p>
-  </div>
-
-  <SiteGraph mode="interactive" class="w-full h-[calc(100vh-13rem)] min-h-104 mt-2" />
-
+  <!-- The graph is the page. Everything else is a caption. -->
   <div
-    class="max-w-5xl mx-auto px-6 pb-10 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs text-muted"
+    class="mx-auto max-w-5xl px-6 pt-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2"
   >
-    {
-      legend.map((l) => (
-        <span class="inline-flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full" style={`background:${l.token}`} />
-          {l.label}
-        </span>
-      ))
-    }
-    <span class="inline-flex items-center gap-1.5">
-      <span class="w-4 h-px bg-muted" />
-      contains
-    </span>
-    <span class="inline-flex items-center gap-1.5">
-      <span
-        class="w-4 h-px"
-        style="background:repeating-linear-gradient(90deg,var(--color-muted) 0 3px,transparent 3px 6px)"
-      />
-      links to
-    </span>
+    <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+      <h1 class="font-display text-xl font-semibold tracking-tight text-ink">Map</h1>
+      <p class="font-mono text-xs text-muted">
+        {pages.length} pages · drag to turn · scroll to zoom · click to open
+      </p>
+    </div>
+
+    <div id="graph-filters" hidden class="flex flex-wrap items-center gap-1.5 font-mono text-xs">
+      <button
+        type="button"
+        data-section="all"
+        aria-pressed="true"
+        class="filter-chip px-2 py-1 rounded border border-hairline text-muted"
+      >
+        all
+      </button>
+      {
+        SECTIONS.map((s) => (
+          <button
+            type="button"
+            data-section={s.key}
+            aria-pressed="false"
+            class="filter-chip px-2 py-1 rounded border border-hairline text-muted inline-flex items-center gap-1.5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full" style={`background:${s.token}`} />
+            {s.key}
+          </button>
+        ))
+      }
+    </div>
   </div>
+
+  <div class="relative">
+    <SiteGraph mode="interactive" class="w-full h-[calc(100vh-15rem)] min-h-104 mt-2" />
+
+    <div class="pointer-events-none absolute inset-x-0 bottom-3">
+      <div class="mx-auto max-w-5xl px-6">
+        <div
+          id="graph-detail"
+          hidden
+          class="inline-block max-w-md rounded-md border border-hairline bg-surface/95 px-3 py-2 backdrop-blur"
+        >
+          <p class="font-mono text-xs text-accent" data-field="href"></p>
+          <p class="font-display text-sm font-semibold text-ink mt-0.5" data-field="label"></p>
+          <p class="text-xs text-muted mt-0.5 leading-snug" data-field="one-liner"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="mx-auto max-w-5xl px-6 pt-12 pb-20">
+    <h2 class="font-mono text-xs uppercase tracking-wider text-muted">every page</h2>
+    <div class="mt-5 grid items-start gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        grouped.map((g) => (
+          <div>
+            <h3 class="font-mono text-xs text-ink inline-flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full" style={`background:${g.token}`} />
+              {g.key}
+            </h3>
+            <ul class="mt-2 space-y-1">
+              {g.rows.map(({ node, depth }) => (
+                <li style={`padding-left:${depth * 0.875}rem`}>
+                  <a
+                    href={node.href}
+                    class:list={[
+                      "text-sm hover:text-accent transition-colors",
+                      node.kind === "index" ? "text-ink font-medium" : "text-muted",
+                    ]}
+                  >
+                    {node.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .filter-chip[aria-pressed="true"] {
+    border-color: var(--color-accent);
+    color: var(--color-ink);
+  }
+</style>
+
+<script>
+  import type { GraphHandle } from "../lib/graph_render";
+  import type { GraphNode } from "../lib/site_graph";
+
+  const filters = document.getElementById("graph-filters");
+  const detail = document.getElementById("graph-detail");
+  const chips = [...document.querySelectorAll<HTMLButtonElement>(".filter-chip")];
+  const active = new Set<string>();
+
+  function paintChips() {
+    for (const chip of chips) {
+      const key = chip.dataset.section!;
+      const on = key === "all" ? active.size === 0 : active.has(key);
+      chip.setAttribute("aria-pressed", String(on));
+    }
+  }
+
+  let graph: GraphHandle | null = null;
+
+  filters?.addEventListener("click", (ev) => {
+    const chip = (ev.target as HTMLElement).closest<HTMLButtonElement>(".filter-chip");
+    if (!chip) return;
+    const key = chip.dataset.section!;
+
+    if (key === "all") active.clear();
+    else if (active.has(key)) active.delete(key);
+    else active.add(key);
+
+    paintChips();
+    graph?.setSections(active.size === 0 ? null : new Set(active));
+  });
+
+  document.addEventListener("graph:ready", (event) => {
+    graph = (event as CustomEvent<GraphHandle>).detail;
+    if (filters) filters.hidden = false;
+    // A filter chosen before three finished loading still applies.
+    if (active.size > 0) graph.setSections(new Set(active));
+  });
+
+  document.addEventListener("graph:hover", (event) => {
+    const node = (event as CustomEvent<GraphNode | null>).detail;
+    if (!detail) return;
+    if (!node) {
+      detail.hidden = true;
+      return;
+    }
+    detail.querySelector('[data-field="href"]')!.textContent = node.href;
+    detail.querySelector('[data-field="label"]')!.textContent = node.label;
+    detail.querySelector('[data-field="one-liner"]')!.textContent = node.oneLiner;
+    detail.hidden = false;
+  });
+</script>

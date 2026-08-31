@@ -126,7 +126,7 @@ const fallback = graphToSvg(graph, {
         obs.disconnect();
         try {
           const { mountGraph } = await import("../lib/graph_render");
-          mountGraph({
+          const handle = mountGraph({
             canvas,
             overlay,
             graph,
@@ -137,6 +137,7 @@ const fallback = graphToSvg(graph, {
             },
           });
           root.dataset.live = "1";
+          root.dispatchEvent(new CustomEvent("graph:ready", { detail: handle, bubbles: true }));
         } catch (err) {
           console.error("graph renderer failed, keeping fallback", err);
         }

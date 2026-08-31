@@ -12,7 +12,9 @@ void main() {
   vTint = tint;
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   gl_PointSize = size * pixelScale / -mv.z;
-  gl_Position = projectionMatrix * mv;
+  // Filtered-out nodes carry size 0, and drivers clamp point size to 1 rather
+  // than dropping them — push them out of the clip volume instead.
+  gl_Position = size <= 0.0 ? vec4(2.0, 2.0, 2.0, 1.0) : projectionMatrix * mv;
 }`;
 
 const FRAGMENT = `
@@ -43,6 +45,9 @@ export interface GraphMountOptions {
 
 export interface GraphHandle {
   destroy(): void;
+  // null shows everything
+  setSections(active: Set<string> | null): void;
+  focus(id: string): void;
 }
 
 export function mountGraph(o: GraphMountOptions): GraphHandle {
@@ -154,9 +159,14 @@ export function mountGraph(o: GraphMountOptions): GraphHandle {
   let hovered = -1;
   let pointerInside = false;
 
+  let activeSections: Set<string> | null = null;
+  const nodeVisible = (i: number) =>
+    !activeSections || nodes[i].kind === "root" || activeSections.has(nodes[i].section);
+
   function setHover(next: number) {
+    if (next >= 0 && !nodeVisible(next)) next = -1;
     if (next === hovered) return;
-    if (hovered >= 0) sizes[hovered] = baseSizes[hovered];
+    if (hovered >= 0) sizes[hovered] = nodeVisible(hovered) ? baseSizes[hovered] : 0;
     hovered = next;
     if (hovered >= 0) sizes[hovered] = baseSizes[hovered] * 1.7;
     pointGeo.getAttribute("size").needsUpdate = true;
@@ -164,7 +174,9 @@ export function mountGraph(o: GraphMountOptions): GraphHandle {
     if (hovered < 0) {
       hotLines.visible = false;
     } else {
-      const attached = edgePairs.filter(([a, b]) => a === hovered || b === hovered);
+      const attached = edgePairs.filter(
+        ([a, b]) => (a === hovered || b === hovered) && nodeVisible(a) && nodeVisible(b),
+      );
       const arr = hotGeo.getAttribute("position").array as Float32Array;
       attached.forEach(([a, b], i) => {
         arr.set(positions.subarray(a * 3, a * 3 + 3), i * 6);
@@ -265,7 +277,7 @@ export function mountGraph(o: GraphMountOptions): GraphHandle {
 
     for (const { l, x, y, z, screenRadius } of visibleLabels) {
       const isHovered = l.index === hovered;
-      if (z > 1) {
+      if (z > 1 || !nodeVisible(l.index)) {
         l.el.style.opacity = "0";
         continue;
       }
@@ -373,7 +385,42 @@ export function mountGraph(o: GraphMountOptions): GraphHandle {
   start();
   schedule();
 
+  function applyFilter() {
+    for (let i = 0; i < nodes.length; i++) {
+      sizes[i] = nodeVisible(i) ? baseSizes[i] : 0;
+    }
+    if (hovered >= 0 && !nodeVisible(hovered)) setHover(-1);
+    else if (hovered >= 0) sizes[hovered] = baseSizes[hovered] * 1.7;
+    pointGeo.getAttribute("size").needsUpdate = true;
+
+    // Rewrite the buffer with only the surviving edges and shorten the draw
+    // range; a hidden edge left in place would still draw.
+    const arr = edgeGeo.getAttribute("position").array as Float32Array;
+    let n = 0;
+    for (const [a, b] of edgePairs) {
+      if (!nodeVisible(a) || !nodeVisible(b)) continue;
+      arr.set(positions.subarray(a * 3, a * 3 + 3), n * 6);
+      arr.set(positions.subarray(b * 3, b * 3 + 3), n * 6 + 3);
+      n++;
+    }
+    edgeGeo.setDrawRange(0, n * 2);
+    edgeGeo.getAttribute("position").needsUpdate = true;
+    schedule();
+  }
+
   return {
+    setSections(active) {
+      activeSections = active;
+      applyFilter();
+    },
+
+    focus(id) {
+      const i = indexOf.get(id);
+      if (i === undefined || !nodeVisible(i)) return;
+      setHover(i);
+      schedule();
+    },
+
     destroy() {
       stop();
       if (rafId) cancelAnimationFrame(rafId);
