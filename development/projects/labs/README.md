@@ -5,5 +5,6 @@ Small, learning-oriented builds — pet projects rather than production work. Mo
 * [Go Live SQL](./go_live_sql.md)
 * [Go Todo CLI](./go_todo_cli.md)
 * [gRPC Test](./grpc_test.md)
+* [ln.c](./ln_c.md)
 * [Proxy Strainer](./proxy_strainer.md)
 * [VPS Setup Scripts](./vps_setup.md)

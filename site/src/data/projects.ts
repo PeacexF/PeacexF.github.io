@@ -183,6 +183,13 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Go", "PostgreSQL"],
   },
+  "labs/ln_c": {
+    title: "ln.c",
+    oneLiner: "Natural logarithm implemented from a Mercator series, no libm log calls.",
+    category: "labs",
+    status: "finished",
+    stack: ["C"],
+  },
 };
 
 export const statusLabel: Record<ProjectStatus, string> = {
