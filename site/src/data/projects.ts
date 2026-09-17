@@ -198,6 +198,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["C"],
   },
+  "labs/mandelbulb": {
+    title: "Mandelbulb",
+    oneLiner: "Real-time 3D fractal ray marcher — Go/WASM state, hand-written WebGPU/WGSL rendering.",
+    category: "labs",
+    status: "finished",
+    stack: ["Go", "WebAssembly", "TypeScript", "WebGPU", "WGSL"],
+    openSource: true,
+  },
 };
 
 export const statusLabel: Record<ProjectStatus, string> = {
