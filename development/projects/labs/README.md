@@ -7,5 +7,6 @@ Small, learning-oriented builds — pet projects rather than production work. Mo
 * [gRPC Test](./grpc_test.md)
 * [ln.c](./ln_c.md)
 * [Mandelbulb](./mandelbulb.md)
+* [ProjectTemplate](./project_template.md)
 * [Proxy Strainer](./proxy_strainer.md)
 * [VPS Setup Scripts](./vps_setup.md)

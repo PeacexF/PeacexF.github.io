@@ -206,6 +206,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "WebAssembly", "TypeScript", "WebGPU", "WGSL"],
     openSource: true,
   },
+  "labs/project_template": {
+    title: "ProjectTemplate",
+    oneLiner: "Personal repo scaffolding CLI — templates, a shared pool, and safe GitHub remote handling.",
+    category: "labs",
+    status: "active",
+    stack: ["Python", "Click"],
+    openSource: true,
+  },
 };
 
 export const statusLabel: Record<ProjectStatus, string> = {
