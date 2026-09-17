@@ -43,6 +43,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
   },
+  ghistory: {
+    title: "ghistory",
+    oneLiner: "Daily, permanent record of the GitHub ecosystem — the git repo is the database.",
+    category: "main",
+    status: "active",
+    stack: ["Python", "Astro", "TypeScript", "GitHub Actions"],
+    openSource: true,
+  },
   gitxnet: {
     title: "GitXNet",
     oneLiner: "Change-detection platform for public interfaces — specs, docs and policy pages — with evidence on every claim.",

@@ -12,6 +12,7 @@ Projects I've built, organized by what kind of work they were.
 * [EnvGraph](./envgraph.md)
 * [envseal](./envseal.md)
 * [ExifDork](./exifdork.md)
+* [ghistory](./ghistory.md)
 * [GitXNet](./gitxnet.md)
 * [Hostimg](./hostimg.md)
 * [LeadPipe](./leadpipe.md)
