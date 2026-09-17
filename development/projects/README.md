@@ -16,6 +16,7 @@ Projects I've built, organized by what kind of work they were.
 * [GitXNet](./gitxnet.md)
 * [Hostimg](./hostimg.md)
 * [LeadPipe](./leadpipe.md)
+* [mailbridge](./tgmailbot.md)
 * [Mailrain](./mailrain.md)
 * [Malbot](./malbot.md)
 * [News Summary](./news_summary.md)

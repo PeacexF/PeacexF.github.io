@@ -74,6 +74,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Python", "FastAPI", "MongoDB", "htmx", "Docker"],
     openSource: true,
   },
+  tgmailbot: {
+    title: "mailbridge",
+    oneLiner: "Reliable IMAP-to-Telegram mail forwarder — at-least-once delivery, IDLE-watched.",
+    category: "main",
+    status: "finished",
+    stack: ["Python", "SQLite", "IMAP", "Telegram", "Docker"],
+    openSource: true,
+  },
   leadpipe: {
     title: "LeadPipe",
     oneLiner: "Lead collection pipeline with entity resolution and full field-level provenance.",
