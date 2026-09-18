@@ -8,6 +8,7 @@ export interface ProjectMeta {
   status: ProjectStatus;
   stack: string[];
   openSource?: boolean;
+  githubUrl?: string;
 }
 
 export const projectMeta: Record<string, ProjectMeta> = {
@@ -17,7 +18,6 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "main",
     status: "finished",
     stack: ["Go", "TypeScript", "React", "Redis", "SQLite", "Docker"],
-    openSource: true,
   },
   stinger: {
     title: "Stinger",
@@ -26,6 +26,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Python", "Go", "SMTP"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/Stinger",
   },
   proxyc: {
     title: "Proxyc",
@@ -34,6 +35,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["C", "libcurl", "SQLite"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/ProxyC",
   },
   gdeltx: {
     title: "gdeltx",
@@ -42,6 +44,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Python", "Typer", "Pydantic", "httpx"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/gdeltx",
   },
   envgraph: {
     title: "EnvGraph",
@@ -50,6 +53,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Go", "Cobra", "JavaScript", "Cytoscape.js"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/EnvGraph",
   },
   ghistory: {
     title: "ghistory",
@@ -58,6 +62,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Python", "Astro", "TypeScript", "GitHub Actions"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/ghistory",
   },
   gitxnet: {
     title: "GitXNet",
@@ -73,6 +78,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Go", "age", "Cobra", "Docker"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/envseal",
   },
   webhookinbox: {
     title: "Webhook Inbox",
@@ -81,6 +87,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Python", "FastAPI", "MongoDB", "htmx", "Docker"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/Webhook-Inbox",
   },
   tgmailbot: {
     title: "mailbridge",
@@ -89,6 +96,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Python", "SQLite", "IMAP", "Telegram", "Docker"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/tgmailbot",
   },
   leadpipe: {
     title: "LeadPipe",
@@ -97,6 +105,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Python", "PostgreSQL", "FastAPI", "SQLAlchemy", "Docker"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/LeadPipe",
   },
   twork: {
     title: "Twork",
@@ -105,6 +114,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Go", "SQLite", "MTProto", "Telegram", "React"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/Twork",
   },
   soundlight: {
     title: "SoundLight",
@@ -113,6 +123,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "paused",
     stack: ["Rust", "Tauri", "React", "TypeScript", "SQLite"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/SoundLight",
   },
   hostimg: {
     title: "HostIMG",
@@ -135,6 +146,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "paused",
     stack: ["Go", "Python", "React"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/Peace-System",
   },
   news_summary: {
     title: "News Summary Bot",
@@ -143,6 +155,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "paused",
     stack: ["Python", "PostgreSQL", "Telegram"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/NewsSummaryBot",
   },
   uniparse: {
     title: "UniParse",
@@ -151,6 +164,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Python", "TypeScript", "Playwright", "SQLite"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/UniParse",
   },
   zipthorn: {
     title: "zipthorn",
@@ -159,6 +173,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Go"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/zipthorn",
   },
   "client-work/ozarnik": {
     title: "Ozarnik",
@@ -194,6 +209,8 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "labs",
     status: "active",
     stack: ["Bash"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/vps-setup",
   },
   "labs/proxy_strainer": {
     title: "Proxy Strainer",
@@ -201,6 +218,8 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "labs",
     status: "finished",
     stack: ["Python"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/Proxy-Strainer",
   },
   "labs/grpc_test": {
     title: "gRPC Test",
@@ -208,6 +227,8 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "labs",
     status: "finished",
     stack: ["Go", "gRPC"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/gRPC-Test",
   },
   "labs/go_todo_cli": {
     title: "Go Todo CLI",
@@ -215,6 +236,8 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "labs",
     status: "finished",
     stack: ["Go"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/Go-ToDo-CLI",
   },
   "labs/go_live_sql": {
     title: "Go Live SQL",
@@ -222,6 +245,8 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "labs",
     status: "finished",
     stack: ["Go", "PostgreSQL"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/Go-Live-SQL",
   },
   "labs/ln_c": {
     title: "ln.c",
@@ -229,6 +254,8 @@ export const projectMeta: Record<string, ProjectMeta> = {
     category: "labs",
     status: "finished",
     stack: ["C"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/ln.c",
   },
   "labs/mandelbulb": {
     title: "Mandelbulb",
@@ -237,6 +264,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "finished",
     stack: ["Go", "WebAssembly", "TypeScript", "WebGPU", "WGSL"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/mandelbulb",
   },
   "labs/project_template": {
     title: "ProjectTemplate",
@@ -245,6 +273,7 @@ export const projectMeta: Record<string, ProjectMeta> = {
     status: "active",
     stack: ["Python", "Click"],
     openSource: true,
+    githubUrl: "https://github.com/PeacexF/ProjectTemplate",
   },
 };
 
