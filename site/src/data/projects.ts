@@ -144,6 +144,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Python", "PostgreSQL", "Telegram"],
     openSource: true,
   },
+  uniparse: {
+    title: "UniParse",
+    oneLiner: "Scraper that extracts structured records from arbitrary websites with little or no per-site configuration.",
+    category: "main",
+    status: "active",
+    stack: ["Python", "TypeScript", "Playwright", "SQLite"],
+    openSource: true,
+  },
   zipthorn: {
     title: "zipthorn",
     oneLiner: "ZIP-bomb and archive-security toolkit — bounded generation, metadata-only detection, fail-closed extraction.",
