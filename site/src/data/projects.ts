@@ -144,6 +144,14 @@ export const projectMeta: Record<string, ProjectMeta> = {
     stack: ["Python", "PostgreSQL", "Telegram"],
     openSource: true,
   },
+  zipthorn: {
+    title: "zipthorn",
+    oneLiner: "ZIP-bomb and archive-security toolkit — bounded generation, metadata-only detection, fail-closed extraction.",
+    category: "main",
+    status: "active",
+    stack: ["Go"],
+    openSource: true,
+  },
   "client-work/ozarnik": {
     title: "Ozarnik",
     oneLiner: "Rust AI assistant sharing one core, memory and sandboxed tool runtime across a Telegram bot and a web Mini App.",
