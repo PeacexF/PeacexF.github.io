@@ -7,6 +7,9 @@ exclude = [
     '<telegram>',
     '<session_id>',
     '<website>',
+    # Self-hosted client deployment, refuses connections from CI runners
+    # Or they just deprecated it and moved on to different infra
+    '^https://ozarnik\.duckdns\.org',
 ]
 
 exclude_all_private = true
