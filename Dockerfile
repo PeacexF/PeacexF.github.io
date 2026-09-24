@@ -1,5 +1,5 @@
 # build
-FROM node:22-alpine AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # serve
-FROM nginx:1.27-alpine
+FROM nginx:1.30-alpine
 
 COPY --from=builder /repo/site/dist /usr/share/nginx/html
 COPY site/nginx.conf /etc/nginx/conf.d/default.conf
