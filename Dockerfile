@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # serve
-FROM nginx:1.30-alpine
+FROM nginx:1.31-alpine
 
 COPY --from=builder /repo/site/dist /usr/share/nginx/html
 COPY site/nginx.conf /etc/nginx/conf.d/default.conf
