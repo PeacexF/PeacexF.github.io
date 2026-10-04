@@ -104,7 +104,7 @@ Key pieces:
 4. Rebuild (`npm run build` in `site/`) and confirm it renders and links
    resolve.
 
-Information about the project will be supplied to you via a .zip file in the repo root, with the name of the zip matching the name of the project.  
+Information about the project will be supplied to you via a .zip file in `./zip/` directory, with the name of the zip matching the name of the project.  
 Unless the user specified where to put the .md summary of the projects (`projects/` or `projects/client-work` or `projects/labs`) you must ask him.  
 
 ### Build & deploy
@@ -120,9 +120,6 @@ Unless the user specified where to put the .md summary of the projects (`project
 
 ## Still open / possible next steps
 
-- `osint/cases/` is a placeholder — real case write-ups planned.
 - GitHub repo links not yet added to the open-source project write-ups.
 - Real product screenshots (Chelicera graph UI, Peace System dashboard) would
   strengthen those case studies — the image pipeline is ready for them.
-- Contact placeholders (`<email>` etc.) in the root READMEs should hold real
-  values in the published version.
