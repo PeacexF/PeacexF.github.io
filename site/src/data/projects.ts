@@ -107,6 +107,15 @@ export const projectMeta: Record<string, ProjectMeta> = {
     openSource: true,
     githubUrl: "https://github.com/PeacexF/LeadPipe",
   },
+  claude_lead_gen: {
+    title: "claude-lead-gen",
+    oneLiner: "Claude Code plugin for lead generation — a deterministic CLI collects and scores, Claude judges, every claim cites a source.",
+    category: "main",
+    status: "active",
+    stack: ["Python", "Claude Code", "Playwright", "SMTP"],
+    openSource: true,
+    githubUrl: "https://github.com/PeacexF/claude-lead-gen",
+  },
   twork: {
     title: "Twork",
     oneLiner: "Self-hosted Telegram job-hunting tool — monitors channels, indexes locally, matches deterministically.",

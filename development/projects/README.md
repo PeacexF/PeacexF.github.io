@@ -9,6 +9,7 @@ Projects I've built, organized by what kind of work they were.
 ### Main Projects
 
 * [Chelicera](./chelicera.md)
+* [claude-lead-gen](./claude_lead_gen.md)
 * [EnvGraph](./envgraph.md)
 * [envseal](./envseal.md)
 * [ExifDork](./exifdork.md)
